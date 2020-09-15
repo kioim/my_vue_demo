@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id="app">
+        我们班
+        <span  title="我是悬浮的鬼">{{msg}}</span>
+        <div v-html="htmlCon"></div>
+        <button @click="tab">切换</button>
+        <h2 :title = "titleText" v-bind:data-id="dataId">得瑟</h2>
+    </div>
+    <div>{{msg}}</div>
+    <div id="app2">
+        <div v-if="num > 90">王坤手举的好高</div>
+        <div v-else-if='num> 60 && num < 90'>王坤是个神经病</div>
+        <div v-else>王坤没举手</div>
+
+        <div v-show="showDu" @click="zFn($event)" data-id="dataz" data-name="zName">周应科有毒</div>
+
+        <ul>
+            <li v-for="(item, i) in items"  :key = "item.id" v-on:click="tabIndex(i)">{{i}}---{{item.name}}</li>
+        </ul>
+        <button @click="addLi">添加</button>
+        <ul>
+            <li v-for="(item, index) in lists" :key = 'index'  @click="ckFn(index)">{{item}}</li>
+        </ul>
+    </div>
+    <div id="app3">
+        <input type="checkbox" v-for = "(item, index) in inputs" :checked="item.flag">
+    </div>
+    <script src="../js/vue.js"></script>
+    <script>
+        // {{}}    模板
+        // v-html: 识别标签的指令
+        // v-on:事件名称   绑定事件   @click
+        // v-bind:属性  动态绑定属性
+
+        // 事件写在methods里    methods里只能写函数方法
+
+
+        // v-if || v-else-if || v-else   判断是否出现，标签直接会从页面消失
+        // v-show    判断是否出现   标签display:none
+        var vms = new Vue({
+            el: "#app",
+            data: {
+                msg: "",
+                htmlCon: "<h1>优秀</h1>",
+                titleText: '我是悬浮的魔鬼',
+                dataId: 1,
+                
+            },
+            methods: {
+               
+                tab:function(){
+                    console.log("不");
+                    this.msg = "是最优秀的";
+                }
+            }
+        })
+        vms.msg = "我不不不u不变";
+
+
+
+        var vm = new Vue({
+            el: '#app2',
+            data: {
+                num: 20,
+                showDu: true,
+              
+                items: [{
+                    id: 123,
+                    name: "王坤狗"
+                },{
+                    id: 1231,
+                    name: "泽鹏困"
+                },{
+                    id: 1233,
+                    name: "张博放假"
+                },{
+                    id: 1235,
+                    name: "申靖美"
+                },{
+                    id: 1236,
+                    name: "步步"
+                }],
+                lists: ["厉害", "了不起", "太完美了", "优秀"]
+            }, 
+            methods: {
+                // index = i
+                tabIndex(index){
+                    console.log(index);
+                    // console.log(this.items[index]);
+                    this.items[index].name= "去他丫的";
+                },
+                addLi(){
+                    var a = {
+                        id: 12345,
+                        name: "上山打老虎"
+                    }
+                    this.items.push(a);
+                }, 
+                ckFn(index){
+                    console.log(index);
+                    this.lists[index] = "改变";
+                },
+                zFn(e){
+                    console.log(e);
+                    console.log(e.target.dataset.name)
+                }
+            }
+        }) 
+
+        var vm3 = new Vue({
+            el: "#app3", 
+            data: {
+                inputs:[{
+                    flag: true
+                }, {
+                    flag: false
+                },{
+                    flag: false
+                },{
+                    flag: false
+                },{
+                    flag: false
+                }]
+            }
+        })
+    </script>
+</body>
+</html>
